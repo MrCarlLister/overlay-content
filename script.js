@@ -1,7 +1,8 @@
 var bgwrap = $( "body"); //ELEMENT ID OF PAGE WRAP TO BE FIXED WHEN OVERLAY IN PLACE
 var fixedclass = 'fixed-while-overlay';// CLASS WITH POSITION:FIXED STYLING
 var holdingvar = $( "#temp" ); // ELEMENT THAT HOLDS HTML BEFORE LAUNCHING COLORBOX
-var getelement = "#themain"; // ELEMENT FROM EXTERNAL PAGE TO 'GET'
+var getelement = $("#oc_elementid").val(); // ELEMENT FROM EXTERNAL PAGE TO 'GET'
+var getclickclass = $("#oc_elementclass").val();
 var url;
 var homeUrl = site.theme_path;
 var globalurl = document.URL; //GET URL OF PAGE, ON PAGE LOAD
@@ -36,7 +37,7 @@ $(document).on('click', ' ' + getelement + ' a', function () {//BINDED BEFORE CR
     return false;
 })
 
-.on('click', '.overlay-link', function() {//BINDED BEFORE CREATION
+.on('click', getclickclass, function() {//BINDED BEFORE CREATION
         url = $(this).attr("href");
         history.pushState(null, null, url);
         bgwrap.addClass(fixedclass);    
@@ -54,7 +55,7 @@ $(document).on('click', ' ' + getelement + ' a', function () {//BINDED BEFORE CR
 });
 
 $(document).ready(function () {
-    $('.overlay-link').colorbox({
+    $(getclickclass).colorbox({
     	inline:true,
     	href:"#temp",
     	innerHeight: '90%',

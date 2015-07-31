@@ -7,4 +7,5 @@ Work in progress.
 
 # What's next
 
-- Add ability for users to edit the target ID of the element to allow users to choose what element to pull
+<del>- Add ability for users to edit the target ID of the element to allow users to choose what element to pull</del>
+<del>- Add ability for users to edit which link class will perform the overlay action (links target must include target ID element - see above)</del>
