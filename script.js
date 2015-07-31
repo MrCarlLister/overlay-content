@@ -1,4 +1,4 @@
-var bgwrap = $( "body"); //ELEMENT ID OF PAGE WRAP TO BE FIXED WHEN OVERLAY IN PLACE
+var bgwrap = $( "html"); //ELEMENT ID OF PAGE WRAP TO BE FIXED WHEN OVERLAY IN PLACE
 var fixedclass = 'fixed-while-overlay';// CLASS WITH POSITION:FIXED STYLING
 var holdingvar = $( "#temp" ); // ELEMENT THAT HOLDS HTML BEFORE LAUNCHING COLORBOX
 var getelement = $("#oc_elementid").val(); // ELEMENT FROM EXTERNAL PAGE TO 'GET'
@@ -85,25 +85,15 @@ $(document).ready(function () {
         },//onOpen
 
         onComplete: function(){ // FULLY LOADED
-            // var ahref = $.colorbox.element().attr("href");
-            // _gaq.push(['_setAccount', 'UA-65650558-1']);
-            // _gaq.push(['_trackPageview', ahref]);
-
-            // alert(ahref);
-            // var ahref = $.colorbox.element().attr("href");
-            // _gaq.push(['_setAccount', 'UA-65650558-1']);
-            // _gaq.push(['_trackPageview', ahref]);
-            // THIS WILL BE USEFUL FOR TRACKING OVERLAY IN GOOGLE ANALYTICS; SEE http://www.jacklmoore.com/colorbox/faq/#faq-analytics
-            // alert(ahref);
 
         },//onComplete
 
 		onClosed:function(){// FUNCTION WHEN COLORBOX CLOSES
 	        history.pushState(null, null, globalurl); //REVERTS URL TO ORIGINAL / BEFORE OVERLAY
-	        $("body").removeClass('fixed-while-overlay'); //RETURNS BACKGROUND CONTENT TO UNFIXED STATE TO ALLOW SCROLLING
-            globalurl = globalurl.replace(/^(?:\/\/|[^\/]+)*\//, "");
+	        bgwrap.removeClass('fixed-while-overlay'); //RETURNS BACKGROUND CONTENT TO UNFIXED STATE TO ALLOW SCROLLING
+            url = globalurl.replace(/^(?:\/\/|[^\/]+)*\//, "");
             _gaq.push(['_setAccount', 'UA-65650558-1']);
-            _gaq.push(['_trackPageview', globalurl]);
+            _gaq.push(['_trackPageview', url]);
 	    }//onClosed
 
 	});	
