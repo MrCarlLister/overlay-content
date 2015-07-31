@@ -2,8 +2,8 @@
     top:10px;
     right:10px;
 }
-#cboxContent #themain {
-  width: inherit;
+#cboxLoadedContent #temp > * {
+    width: inherit;
     margin: 0;
 }
 .fixed-while-overlay {

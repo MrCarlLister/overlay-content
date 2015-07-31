@@ -20,13 +20,14 @@ $(document).bind("cbox_complete", function(){
 });
 
 // CONTROLL WHAT HAPPENS INSIDE THE COLORBOX
-$(document).on('click', ' ' + getelement + ' a', function () {//BINDED BEFORE CREATION
+$(document).on('click', ' ' + getelement + ' a:not(.image-overlay)', function () {//BINDED BEFORE CREATION
      	url = $(this).attr("href");
      	history.pushState(null, null, url);
         url = url.replace(/^(?:\/\/|[^\/]+)*\//, "");
         _gaq.push(['_setAccount', 'UA-65650558-1']);
         _gaq.push(['_trackPageview', url]);
-		holdingvar.load( url + " #themain" , function() {
+		holdingvar.load( url + ' ' + getelement , function() {
+            $(getelement + ' a[href$=".png"]').addClass('image-overlay');
 			$('#cboxContent').css('opacity', 0);
 			$('#cboxLoadedContent').animate({scrollTop: 0}, 0);
 			$("#cboxContent").animate({"opacity": 1
@@ -34,6 +35,31 @@ $(document).on('click', ' ' + getelement + ' a', function () {//BINDED BEFORE CR
 				//do something after animating?
 			});
 		});
+        holdingvar.html('');
+    return false;
+})
+
+.on('click', '.image-overlay', function() {//BINDED BEFORE CREATION
+    
+        url = $(this).attr("href");
+        history.pushState(null, null, url);
+        bgwrap.addClass(fixedclass);    
+        var imgsrc = '<img src="' + url + '" />';
+        $('#cboxContent').css('opacity', 0);
+        holdingvar.html(imgsrc);
+
+        $.colorbox.resize({
+            maxWidth:"auto",
+            width:80+'%'
+
+        });
+
+        $("#cboxContent").animate({"opacity": 1
+        }, 400, function() {
+            //do something after animating?
+        });
+        // holdingvar.html('');
+    
     return false;
 })
 
@@ -43,6 +69,7 @@ $(document).on('click', ' ' + getelement + ' a', function () {//BINDED BEFORE CR
         bgwrap.addClass(fixedclass);    
 
         holdingvar.load( url + ' ' + getelement , function() {
+            $(getelement + ' a[href$=".png"]').addClass('image-overlay');
             $("#cboxContent").animate({"opacity": 1
             }, 400, function() {
                 //do something after animating?
@@ -55,6 +82,8 @@ $(document).on('click', ' ' + getelement + ' a', function () {//BINDED BEFORE CR
 });
 
 $(document).ready(function () {
+
+    // $('a[href$=".gif"], a[href$=".jpg"], a[href$=".png"], a[href$=".bmp"]').addClass('tesssst');
     $(getclickclass).colorbox({
     	inline:true,
     	href:"#temp",
@@ -77,6 +106,7 @@ $(document).ready(function () {
                         $("#cboxContent").animate({"opacity": 1
                         }, 400, function() {
                             //do something after animating?
+
                         });
                     });
                 }; //END IF / ELSE
