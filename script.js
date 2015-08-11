@@ -7,10 +7,56 @@ var url;
 var homeUrl = site.theme_path;
 var globalurl = document.URL; //GET URL OF PAGE, ON PAGE LOAD
 
+function whatistheurl(file) {
+    
+    var extension = file.substr( (file.lastIndexOf('.') +1) );
+    switch(extension) {
+        case 'jpg':
+        case 'png':
+        case 'gif':
+            // history.pushState(null, null, url);
+            bgwrap.addClass(fixedclass);    
+            $('#cboxContent').css('opacity', 0);
+            var imgsrc = '<img src="' + url + '" />';
+            holdingvar.html(imgsrc);
+                
+            $.colorbox.resize({
+                maxWidth:"auto",
+                width:80+'%'
+            });
 
+            $("#cboxContent").animate({"opacity": 1
+            }, 400, function() {
+                //do something after animating?
+            });
+        break;                         // the alert ended with pdf instead of gif.
+        case 'zip':
+        case 'rar':
+            // alert('was zip rar');
+        break;
+        case 'pdf':
+            // alert('was pdf');
+        break;
+        default:
+        
+            holdingvar.load( url + ' ' + getelement , function() {
+            // $(getelement + ' a[href$=".png"]').addClass('image-overlay');
+            $('#cboxContent').css('opacity', 0);
+            $('#cboxLoadedContent').animate({scrollTop: 0}, 0);
+            $("#cboxContent").animate({"opacity": 1
+            }, 400, function() {
+                //do something after animating?
+                // holdingvar.html('');
+            });
+        });
+
+            // alert('who knows');
+    }
+};
 $(document).bind("cbox_complete", function(){
     var ahref = $.colorbox.element().attr("href");
     if (ahref) {
+
          ahref = ahref.replace(/^(?:\/\/|[^\/]+)*\//, "");
         _gaq.push(['_setAccount', 'UA-65650558-1']);
         _gaq.push(['_trackPageview', ahref]);
@@ -20,48 +66,27 @@ $(document).bind("cbox_complete", function(){
 });
 
 // CONTROLL WHAT HAPPENS INSIDE THE COLORBOX
-$(document).on('click', ' ' + getelement + ' a:not(.image-overlay)', function () {//BINDED BEFORE CREATION
-     	url = $(this).attr("href");
-     	history.pushState(null, null, url);
-        url = url.replace(/^(?:\/\/|[^\/]+)*\//, "");
-        _gaq.push(['_setAccount', 'UA-65650558-1']);
-        _gaq.push(['_trackPageview', url]);
-		holdingvar.load( url + ' ' + getelement , function() {
-            $(getelement + ' a[href$=".png"]').addClass('image-overlay');
-			$('#cboxContent').css('opacity', 0);
-			$('#cboxLoadedContent').animate({scrollTop: 0}, 0);
-			$("#cboxContent").animate({"opacity": 1
-			}, 400, function() {
-				//do something after animating?
-			});
-		});
-        holdingvar.html('');
+$(document).on('click', '#temp ' + getelement + ' a', function () {//BINDED BEFORE CREATION
+    
+       url = $(this).attr("href");
+       history.pushState(null, null, url);
+     	// alert('here');
+        // url = url.replace(/^(?:\/\/|[^\/]+)*\//, "");
+        // _gaq.push(['_setAccount', 'UA-65650558-1']);
+        // _gaq.push(['_trackPageview', url]);
+        whatistheurl(url);
+        
     return false;
 })
 
-.on('click', '.image-overlay', function() {//BINDED BEFORE CREATION
+// .on('click', '.image-overlay', function() {//BINDED BEFORE CREATION
+//         url = $(this).attr("href");
+//         history.pushState(null, null, url);
+
+//         holdingvar.html('');
     
-        url = $(this).attr("href");
-        history.pushState(null, null, url);
-        bgwrap.addClass(fixedclass);    
-        var imgsrc = '<img src="' + url + '" />';
-        $('#cboxContent').css('opacity', 0);
-        holdingvar.html(imgsrc);
-
-        $.colorbox.resize({
-            maxWidth:"auto",
-            width:80+'%'
-
-        });
-
-        $("#cboxContent").animate({"opacity": 1
-        }, 400, function() {
-            //do something after animating?
-        });
-        // holdingvar.html('');
-    
-    return false;
-})
+//     return false;
+// })
 
 .on('click', getclickclass, function() {//BINDED BEFORE CREATION
         url = $(this).attr("href");
@@ -81,36 +106,40 @@ $(document).on('click', ' ' + getelement + ' a:not(.image-overlay)', function ()
     return false;
 });
 
+window.addEventListener("popstate", function(e) {
+    $('#cboxContent').css('opacity', 0);
+    // alert('a');
+
+   $.colorbox.resize({
+        innerWidth:"780px",
+        innerHeight:'100%'
+    });
+
+    url = document.URL;
+    // alert(url);
+
+    whatistheurl(url);
+
+    if(url == homeUrl) {
+        $.colorbox.close();
+    }; //END IF / ELSE
+}); //END EVENTLISTENER
+
 $(document).ready(function () {
 
     // $('a[href$=".gif"], a[href$=".jpg"], a[href$=".png"], a[href$=".bmp"]').addClass('tesssst');
     $(getclickclass).colorbox({
+        fixed:true,
     	inline:true,
     	href:"#temp",
-    	innerHeight: '90%',
-    	bottom: '0px',
+    	innerHeight: '100%',
+    	top: '0px',
     	opacity:0.9,
     	innerWidth:"780px",
     	onOpen: function(){
         	$("#cboxContent").css("opacity", 0);
 
-            window.addEventListener("popstate", function(e) {
-                url = document.URL;
-
-                if(url == homeUrl) {
-                   location.reload();
-                } else {
-                    holdingvar.load( url + ' ' + getelement , function() {
-                        $('#cboxContent').css('opacity', 0);
-                        $('#cboxLoadedContent').animate({scrollTop: 0}, 0);
-                        $("#cboxContent").animate({"opacity": 1
-                        }, 400, function() {
-                            //do something after animating?
-
-                        });
-                    });
-                }; //END IF / ELSE
-            }); //END EVENTLISTENER
+            
 
         },//onOpen
 
