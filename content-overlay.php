@@ -46,10 +46,10 @@ function db_oc_uninstall(){//WHEN PLUGIN DEACTIVATES DROP TABLE (IF IT EXISTS)
 
 
 function overlaycontent_scripts() {
-	wp_enqueue_script( 'overlay-script', '/wp-content/plugins/content-overlay/script.js', array( 'jquery' ), '20150330', true );
+	wp_enqueue_script( 'overlay-script', plugins_url('script.js', __FILE__), array( 'jquery' ), '20150330', true );
 
-	wp_enqueue_style( 'overlay-css', '/wp-content/plugins/content-overlay/styles.css', '1', true );
-	wp_enqueue_script( 'colorbox-script', '/wp-content/plugins/content-overlay/jquery.colorbox-min.js', array( 'jquery' ), '20150101', true );
+	wp_enqueue_style( 'overlay-css', plugins_url('styles.css', __FILE__), '1', true );
+	wp_enqueue_script( 'colorbox-script', plugins_url('jquery.colorbox-min.js', __FILE__), array( 'jquery' ), '20150101', true );
 	wp_localize_script("overlay-script", "site",
     	array( "theme_path" => home_url('/'))
     );
