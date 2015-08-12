@@ -71,22 +71,13 @@ $(document).on('click', '#temp ' + getelement + ' a', function () {//BINDED BEFO
        url = $(this).attr("href");
        history.pushState(null, null, url);
      	// alert('here');
-        // url = url.replace(/^(?:\/\/|[^\/]+)*\//, "");
-        // _gaq.push(['_setAccount', 'UA-65650558-1']);
-        // _gaq.push(['_trackPageview', url]);
+        gaurl = url.replace(/^(?:\/\/|[^\/]+)*\//, "");
+        _gaq.push(['_setAccount', 'UA-65650558-1']);
+        _gaq.push(['_trackPageview', gaurl]);
         whatistheurl(url);
         
     return false;
 })
-
-// .on('click', '.image-overlay', function() {//BINDED BEFORE CREATION
-//         url = $(this).attr("href");
-//         history.pushState(null, null, url);
-
-//         holdingvar.html('');
-    
-//     return false;
-// })
 
 .on('click', getclickclass, function() {//BINDED BEFORE CREATION
         url = $(this).attr("href");
@@ -107,17 +98,17 @@ $(document).on('click', '#temp ' + getelement + ' a', function () {//BINDED BEFO
 });
 
 window.addEventListener("popstate", function(e) {
-    $('#cboxContent').css('opacity', 0);
-    // alert('a');
 
-   $.colorbox.resize({
+    $('#cboxContent').css('opacity', 0);
+    $.colorbox.resize({
         innerWidth:"780px",
         innerHeight:'100%'
     });
 
     url = document.URL;
-    // alert(url);
-
+    gaurl = url.replace(/^(?:\/\/|[^\/]+)*\//, "");
+    _gaq.push(['_setAccount', 'UA-65650558-1']);
+    _gaq.push(['_trackPageview', gaurl]);
     whatistheurl(url);
 
     if(url == homeUrl) {
