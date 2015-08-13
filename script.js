@@ -126,7 +126,7 @@ $(document).ready(function () {
     	innerHeight: '100%',
     	top: '0px',
     	opacity:0.9,
-    	innerWidth:"780px",
+    	innerWidth:"960px",
     	onOpen: function(){
         	$("#cboxContent").css("opacity", 0);
 
